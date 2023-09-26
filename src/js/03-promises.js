@@ -13,7 +13,7 @@ function createPromise(position, delay) {
   });
 }
 
-document.querySelector('form').addEventListener('submit', async e => {
+document.querySelector('form').addEventListener('submit', e => {
   e.preventDefault();
   const firstDelay = parseInt(
     document.querySelector('input[name="delay"]').value,
@@ -25,12 +25,11 @@ document.querySelector('form').addEventListener('submit', async e => {
     10
   );
 
-  for (let i = 0; i < amount; i++) {
-    const position = i + 1;
-    const delay = firstDelay + i * step;
+  for (let i = 1; i <= amount; i++) {
+    const position = i;
+    const delay = firstDelay + (i - 1) * step;
 
-    // Corrected 'then' to 'await createPromise'
-    await createPromise(position, delay)
+    createPromise(position, delay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay} ms`);
       })

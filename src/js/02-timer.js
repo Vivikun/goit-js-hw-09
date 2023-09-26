@@ -19,6 +19,15 @@ const options = {
   },
 };
 
+let countdownInterval;
+
+document.querySelector('#datetime-picker').addEventListener('change', () => {
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
+  startCountdown();
+});
+
 flatpickr('#datetime-picker', options);
 
 function convertMs(ms) {
@@ -39,9 +48,11 @@ function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
 
-let countdownInterval;
+function startCountdown() {
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
 
-document.querySelector('[data-start]').addEventListener('click', () => {
   const selectedDate = new Date(
     document.getElementById('datetime-picker').value
   );
@@ -76,4 +87,9 @@ document.querySelector('[data-start]').addEventListener('click', () => {
       );
     }, 1000);
   }
+}
+
+// Obsługa kliknięcia przycisku Start
+document.querySelector('[data-start]').addEventListener('click', () => {
+  startCountdown();
 });
